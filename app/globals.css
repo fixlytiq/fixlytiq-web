@@ -1,8 +1,28 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #09090b;
+  --foreground: #fafafa;
+  --muted: #a1a1aa;
+  --surface: #18181b;
+  --surface-elevated: #27272a;
+  --border: #27272a;
+  --accent: #10b981;
+  --accent-muted: rgba(16, 185, 129, 0.15);
+  --ring: rgba(16, 185, 129, 0.45);
+  /* Kiosk / POS: larger minimum touch */
+  --touch-min: 3.25rem;
+  /**
+   * DeviceChrome (top bar) height — keep in sync with DeviceChrome.tsx
+   * h-12 = 3rem, md:h-14 = 3.5rem
+   */
+  --shell-header-h: 3rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --shell-header-h: 3.5rem;
+  }
 }
 
 @theme inline {
@@ -12,15 +32,35 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  color-scheme: dark;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+/* Full-viewport device shell: single scroll region inside main */
+.device-shell {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.device-main {
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+@layer utilities {
+  .touch-target {
+    min-height: var(--touch-min);
+    min-width: var(--touch-min);
+  }
+
+  .touch-pad {
+    min-height: 3.5rem;
+    min-width: 3.5rem;
+  }
 }
